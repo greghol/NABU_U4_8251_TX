@@ -1,0 +1,9 @@
+		.RADIX 16
+		ORG	100H
+		LD	A, 47H
+		OUT	(90H), A
+		LD	A, 05H
+		OUT	(91H), A
+		RET
+		END
+
