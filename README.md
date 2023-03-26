@@ -14,7 +14,7 @@ MIT
 DJ Sures's NABU-LIB is used to compile against using z88dk Z80 C Compiler.
 The Hello World C under NABU_LIB is the base code for NABU_U4_8251_TX code.
 
-### Theroy of Operation
+### Theory of Operation
 
 The keyboard's Rx side of the 8251A is running at xxxx baud. The RxC is feed
 from a clock that is 16 times or 16x the required baud. The Tx side is similar
