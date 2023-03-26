@@ -57,6 +57,7 @@ void main2() {
   int8_t name[66] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*()-_=+[{]}\|;:'<>.?,/";
   int8_t * msg_ptr = name;  
   
+  IO_KEYBOARD_STATUS = 0x05;
   lastPosition.x = 0;
   lastPosition.y = 0;
 
@@ -93,42 +94,38 @@ void main2() {
     // Write the text in the new position
     vdp_setCursor2(newPosition.x, newPosition.y);
     //vdp_print("NABU");
-	
- 	if(*msg_ptr != '\0')
-	{
-		if((0x04 && IO_KEYBOARD_STATUS) == 0x01)
-		{
-		IO_KEYBOARD = *msg_ptr;
-		IO_KEYBOARD_STATUS = 0x05;
-		msg_ptr++;
-		}
-	}
-	else
-	{
-		if((0x04 && IO_KEYBOARD_STATUS) == 0x01)
-		{
-			IO_KEYBOARD = 0x0D;	//carriage return
-			IO_KEYBOARD_STATUS = 0x05;
-			z80_delay_ms(1);
-		}
-		if((0x04 && IO_KEYBOARD_STATUS) == 0x01)
-		{
-			IO_KEYBOARD = 0x0A; //line feed
-			IO_KEYBOARD_STATUS = 0x05;
-			msg_ptr = name;
-		}
-	}
-	
-	if(IO_KEYBOARD_STATUS & 0x01) {value_final[7] = '1';} else {value_final[7] = '0';}
-	if(IO_KEYBOARD_STATUS & 0x02) {value_final[6] = '1';} else {value_final[6] = '0';}
-	if(IO_KEYBOARD_STATUS & 0x04) {value_final[5] = '1';} else {value_final[5] = '0';}
-	if(IO_KEYBOARD_STATUS & 0x08) {value_final[4] = '1';} else {value_final[4] = '0';}
-	if(IO_KEYBOARD_STATUS & 0x10) {value_final[3] = '1';} else {value_final[3] = '0';}
-	if(IO_KEYBOARD_STATUS & 0x20) {value_final[2] = '1';} else {value_final[2] = '0';}
-	if(IO_KEYBOARD_STATUS & 0x40) {value_final[1] = '1';} else {value_final[1] = '0';}
-	if(IO_KEYBOARD_STATUS & 0x80) {value_final[0] = '1';} else {value_final[0] = '0';}
 
-	vdp_print((char *)value_final);
+    if(*msg_ptr != '\0')
+    {
+        if(0x04 & IO_KEYBOARD_STATUS)
+        {
+        IO_KEYBOARD = *msg_ptr;
+        msg_ptr++;
+        }
+    }
+    else
+    {
+        if(0x04 & IO_KEYBOARD_STATUS)
+        {
+            IO_KEYBOARD = 0x0D; //carriage return
+        }
+        if(0x04 & IO_KEYBOARD_STATUS)
+        {
+            IO_KEYBOARD = 0x0A; //line feed
+            msg_ptr = name;
+        }
+    }
+    
+    if(IO_KEYBOARD_STATUS & 0x01) {value_final[7] = '1';} else {value_final[7] = '0';}
+    if(IO_KEYBOARD_STATUS & 0x02) {value_final[6] = '1';} else {value_final[6] = '0';}
+    if(IO_KEYBOARD_STATUS & 0x04) {value_final[5] = '1';} else {value_final[5] = '0';}
+    if(IO_KEYBOARD_STATUS & 0x08) {value_final[4] = '1';} else {value_final[4] = '0';}
+    if(IO_KEYBOARD_STATUS & 0x10) {value_final[3] = '1';} else {value_final[3] = '0';}
+    if(IO_KEYBOARD_STATUS & 0x20) {value_final[2] = '1';} else {value_final[2] = '0';}
+    if(IO_KEYBOARD_STATUS & 0x40) {value_final[1] = '1';} else {value_final[1] = '0';}
+    if(IO_KEYBOARD_STATUS & 0x80) {value_final[0] = '1';} else {value_final[0] = '0';}
+
+    vdp_print((char *)value_final);
 
     // Save the new position into the last position
     lastPosition.x = newPosition.x;
