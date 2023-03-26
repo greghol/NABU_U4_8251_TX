@@ -31,6 +31,8 @@ TxD (pin 19) is connected to the TX input of the serial USB or RS232 dongle.
 GND (pin 4) or another digital ground can be connected to the ground of the
             serial/RS232 converter.
 
+![8251A Mods](8251.png)
+
 ### Demo Software
 
 Load the 000001.nabu pak with your IA software to the NABU. This produce a
